@@ -47,9 +47,9 @@ public class SlayerTagInfobox {
             // Maintain counter expiry:
             // - start a timer when count drops to 0
             // - remove infobox when the timer expires
-            if (counterExpiresAt == null) {
+            if (counterExpiresAt == null && counter != null) {
                 counterExpiresAt = Instant.now().plus(config.taggedTimeoutMinutes(), ChronoUnit.MINUTES);
-            } else if (counterExpiresAt.isBefore(Instant.now())) {
+            } else if (counterExpiresAt != null && counterExpiresAt.isBefore(Instant.now())) {
                 clear();
             }
         } else {

@@ -48,6 +48,8 @@ public class SlayerTagHighlightPlugin extends Plugin {
 	@Inject
 	private SlayerTagHighlightConfig config;
 	@Inject
+	private SlayerTaggedCounterManager taggedCounter;
+	@Inject
 	private SlayerPluginService slayerPluginService;
 	@Inject
 	private PluginManager pluginManager;
@@ -59,6 +61,10 @@ public class SlayerTagHighlightPlugin extends Plugin {
 
 	@Getter
 	private ArrayList<NPC> highlights = new ArrayList<>();
+
+	@Getter
+	private int taggedCount = 0;
+
 	private List<String> filterNames;
 
 	@Override
@@ -76,21 +82,28 @@ public class SlayerTagHighlightPlugin extends Plugin {
 	protected void shutDown() {
 		overlayManager.remove(overlay);
 		overlayManager.remove(minimapOverlay);
+		taggedCounter.clear();
 	}
 
 	@Subscribe
 	public void onGameTick(GameTick event) {
 		highlights.clear();
+		int newTaggedCount = 0;
 		for (NPC npc : client.getNpcs()) {
 			if (slayerPluginService.getTargets().contains(npc)
 					&& !highlights.contains(npc)
-					&& !npc.isInteracting()
 					&& !npc.isDead()
 					&& (highlightMatchesNPCName(npc.getName()) || !config.filterByList())
 			) {
-				highlights.add(npc);
+				if (!npc.isInteracting()) {
+					highlights.add(npc);
+				} else {
+					newTaggedCount++;
+				}
 			}
 		}
+		taggedCounter.refresh(taggedCount, newTaggedCount);
+		taggedCount = newTaggedCount;
 	}
 
 	@Subscribe

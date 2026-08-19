@@ -119,4 +119,46 @@ public interface SlayerTagHighlightConfig extends Config
 	)
 	default int outlineFeather() {return 2;}
 
+	@ConfigItem(
+			position = 12,
+			keyName = "showTaggedInfobox",
+			name = "Show Tagged Count Infobox",
+			description = "Show an infobox indicating the number of tagged NPCs"
+	)
+	default boolean showTaggedInfobox() {return false;}
+
+	@ConfigItem(
+			position = 13,
+			keyName = "taggedTimeoutMinutes",
+			name = "Tagged Infobox Expiry",
+			description = "Set the time until the tagged counter infobox expires"
+	)
+	@Units(Units.MINUTES)
+	default int taggedTimeoutMinutes()
+	{
+		return 5;
+	}
+
+	@ConfigItem(
+			position = 14,
+			keyName = "lowTaggedCountNotification",
+			name = "Low Tagged Count Notification",
+			description = "Enables notifications for the number of tagged NPCs"
+	)
+	default Notification lowTaggedCountNotification()
+	{
+		return Notification.OFF;
+	}
+
+	@ConfigItem(
+			position = 15,
+			keyName = "taggedCountNotificationThreshold",
+			name = "Low Tagged Count Threshold",
+			description = "The count of tagged NPCs to notify at"
+	)
+	default int lowTaggedCountNotificationThreshold()
+	{
+		return 0;
+	}
+
 }

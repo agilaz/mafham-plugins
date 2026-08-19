@@ -8,6 +8,8 @@ Features:
 + Highlight menu entries
 + Highlight minimap position
 + Filter to only highlight NPCs from a given list (must still be on your slayer task)
++ Infobox displaying the number of tagged NPCs
++ Notification when tagged NPC count falls below a threshold
 
 ![example1](https://i.imgur.com/iStLcK3.png)  
-![example2](https://i.imgur.com/ixYxtTo.png)
+![example2](https://i.imgur.com/DDng55i.png)
